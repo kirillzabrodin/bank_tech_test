@@ -16,7 +16,19 @@ date || credit || debit || balance
 10/01/2012 || 1000.00 || || 1000.00
 ```
 
-### Installation
+### Installation and running tests
 - Clone the repo and rub ```bundle```.
 - Run RSpec to check tests.
 - Enjoy!
+
+### Usage
+Create a new bank class object for yourself with
+``` your_name = Bank.new ```
+
+You can use ```.status``` on the object to get the statment and ```.credit```/```.debit``` to add or withdraw money.
+
+I ended up adding the time in minutes for when the transaction occured.
+
+### Contributing
+
+Make a pull request with passing tests and linter and I can approve it!
