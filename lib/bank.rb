@@ -1,13 +1,12 @@
 class Bank
-
   def initialize
     @balance = 0
     @header = "date || credit || debit || balance\n"
-    @statment = ""
+    @statment = ''
   end
 
   def status
-    return @header + @statment
+    @header + @statment
   end
 
   def credit(num)
@@ -21,5 +20,4 @@ class Bank
     @statment.prepend("#{Time.now.strftime("%d/%m/%Y %H:%M")} || || #{'%.2f' % num} || #{'%.2f' % @balance}\n")
     return '%.2f' % @balance
   end
-
 end

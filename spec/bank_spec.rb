@@ -1,8 +1,6 @@
 require 'bank'
 
-
 describe Bank do
-
   describe 'status' do
     it 'returns empty status if no transactions' do
       expect(subject.status).to eq "date || credit || debit || balance\n"
@@ -16,9 +14,9 @@ describe Bank do
     it 'returns the status and latest transation in correct order' do
       subject.credit(10)
       subject.credit(1000)
-      expect(subject.status).to eq "date || credit || debit || balance\n#{Time.now.strftime("%d/%m/%Y %H:%M")} || 1000.00 || || 1010.00\n#{Time.now.strftime("%d/%m/%Y %H:%M")} || 10.00 || || 10.00\n"
+      statement = "date || credit || debit || balance\n#{Time.now.strftime("%d/%m/%Y %H:%M")} || 1000.00 || || 1010.00\n#{Time.now.strftime("%d/%m/%Y %H:%M")} || 10.00 || || 10.00\n"
+      expect(subject.status).to eq statement
     end
-
   end
 
   describe 'credit' do
@@ -32,5 +30,4 @@ describe Bank do
       expect(subject.debit(1000)).to eq '%.2f' % -1000
     end
   end
-
 end
