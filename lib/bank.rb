@@ -11,14 +11,14 @@ class Bank
 
   def credit(num)
     @balance += num
-    line = "#{time} || #{format('%.2f', num)} || || #{format('%.2f', @balance)}"
+    line = "#{format('%.2f', num)} ||"
     add_to_statement(line)
     format('%.2f', @balance)
   end
 
   def debit(num)
     @balance -= num
-    line = "#{time} || || #{format('%.2f', num)} || #{format('%.2f', @balance)}"
+    line = "|| #{format('%.2f', num)}"
     add_to_statement(line)
     format('%.2f', @balance)
   end
@@ -26,7 +26,7 @@ class Bank
   private
 
   def add_to_statement(line)
-    @statment.prepend("#{line}\n")
+    @statment.prepend("#{time} || #{line} || #{format('%.2f', @balance)}\n")
   end
 
   def time

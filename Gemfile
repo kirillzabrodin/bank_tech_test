@@ -1,6 +1,9 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem 'pry'
-gem 'rubocop'
-gem 'rspec'
-gem 'timecop'
+group :test do
+  gem 'pry'
+  gem 'rspec'
+  gem 'rubocop'
+  gem 'simplecov', require: false
+  gem 'timecop'
+end

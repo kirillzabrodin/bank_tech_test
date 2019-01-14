@@ -1,0 +1,9 @@
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'context']
+
+AllCops:
+  Exclude:
+    - 'spec/*'
+
+Documentation:
+    Enabled: false
