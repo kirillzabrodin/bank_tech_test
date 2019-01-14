@@ -1,32 +1,34 @@
+require 'transaction'
+
 class Bank
-  def initialize
+  def initialize(transaction = Transaction.new)
+    @transaction = transaction
     @balance = 0
     @header = "date || credit || debit || balance\n"
-    @statment = ''
   end
 
   def status
-    @header + @statment
+    puts "#{@header} + #{@transaction.list}"
   end
 
   def credit(num)
     @balance += num
     line = "#{format('%.2f', num)} ||"
     add_to_statement(line)
-    format('%.2f', @balance)
+    puts format('%.2f', @balance)
   end
 
   def debit(num)
     @balance -= num
     line = "|| #{format('%.2f', num)}"
     add_to_statement(line)
-    format('%.2f', @balance)
+    puts format('%.2f', @balance)
   end
 
   private
 
   def add_to_statement(line)
-    @statment.prepend("#{time} || #{line} || #{format('%.2f', @balance)}\n")
+    @statement << "#{time} || #{line} || #{format('%.2f', @balance)}\n"
   end
 
   def time

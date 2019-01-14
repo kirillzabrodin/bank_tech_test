@@ -22,10 +22,18 @@ date || credit || debit || balance
 - Enjoy!
 
 ### Usage
+Run
+```
+rspec
+rubocop
+```
+in the project directory to run the tests and the linter respectively.
+
+
 Create a new bank class object for yourself with
 ``` your_name = Bank.new ```
 
-You can use ```.status``` on the object to get the statment and ```.credit```/```.debit``` to add or withdraw money.
+You can use ```.status``` on the object to get the statement and ```.credit```/```.debit``` to add or withdraw money.
 
 I ended up adding the time in minutes for when the transaction occured.
 
