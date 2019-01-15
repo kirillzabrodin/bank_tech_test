@@ -16,26 +16,30 @@ date || credit || debit || balance
 10/01/2012 || 1000.00 || || 1000.00
 ```
 
+User specification didn't mention error cases so I added fails if amount given in credit or debit weren't number.
+
 ### Installation and running tests
 - Clone the repo and rub ```bundle```.
-- Run RSpec to check tests.
-- Enjoy!
-
-### Usage
-Run
+- Run
 ```
 rspec
 rubocop
 ```
-in the project directory to run the tests and the linter respectively.
+in the project directory to check tests and linter.
+- Enjoy!
 
+### Usage
+- Enter into IRB or preferred ruby REPL.
+- ```require './lib/bank'```
+
+This will set up the REPL environment for playing with the code.
 
 Create a new bank class object for yourself with
 ``` your_name = Bank.new ```
 
-You can use ```.status``` on the object to get the statement and ```.credit```/```.debit``` to add or withdraw money.
+You can use ```.statement``` on the object to get the statement and ```.credit(amount)```/```.debit(amount)``` to add or withdraw money.
 
-I ended up adding the time in minutes for when the transaction occured.
+~~I ended up adding the time in minutes for when the transaction occured.~~
 
 ### Contributing
 

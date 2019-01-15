@@ -1,37 +1,50 @@
-require 'transaction'
+require './lib/transaction'
 
 class Bank
   def initialize(transaction = Transaction.new)
     @transaction = transaction
-    @balance = 0
-    @header = "date || credit || debit || balance\n"
+    @header = 'date || credit || debit || balance'
+    @statement = []
   end
 
-  def status
-    puts "#{@header} + #{@transaction.list}"
+  def statement
+    puts @header.to_s
+    @statement.each { |line| puts line }
   end
 
-  def credit(num)
-    @balance += num
-    line = "#{format('%.2f', num)} ||"
-    add_to_statement(line)
-    puts format('%.2f', @balance)
+  def credit(amount)
+    raise "#{amount} is not a number" unless amount.is_a? Numeric
+
+    @transaction.credit(amount)
+    add_to_statement(credit_format(amount))
   end
 
-  def debit(num)
-    @balance -= num
-    line = "|| #{format('%.2f', num)}"
-    add_to_statement(line)
-    puts format('%.2f', @balance)
+  def debit(amount)
+    raise "#{amount} is not a number" unless amount.is_a? Numeric
+
+    @transaction.debit(amount)
+    add_to_statement(debit_format(amount))
   end
 
   private
 
   def add_to_statement(line)
-    @statement << "#{time} || #{line} || #{format('%.2f', @balance)}\n"
+    @statement.push("#{time} || #{line} || #{balance}\n")
+  end
+
+  def debit_format(amount)
+    "|| #{format('%.2f', amount)}"
+  end
+
+  def credit_format(amount)
+    "#{format('%.2f', amount)} ||"
   end
 
   def time
-    Time.now.strftime('%d/%m/%Y %H:%M')
+    Time.now.strftime('%d/%m/%Y')
+  end
+
+  def balance
+    format('%.2f', @transaction.balance)
   end
 end
