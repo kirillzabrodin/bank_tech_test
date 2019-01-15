@@ -28,9 +28,9 @@ describe Bank do
       expect { bank.credit('Hello') }.to raise_error 'Hello is not a number'
     end
 
-    it "errors out when negative number" do
+    it 'errors out when negative number' do
       allow(transaction).to receive(:balance).and_return(0)
-      expect { bank.credit(-1) }.to raise_error("Numbers must be positive.")
+      expect { bank.credit(-1) }.to raise_error('Numbers must be positive.')
     end
   end
 
@@ -47,14 +47,15 @@ describe Bank do
       expect { bank.debit('Hello') }.to raise_error 'Hello is not a number'
     end
 
-    it "errors out when balance too low" do
+    it 'errors out when balance too low' do
       allow(transaction).to receive(:balance).and_return(0)
-      expect { bank.debit(1) }.to raise_error("Not enough credit, your balance is 0.00.")
+      error_message = 'Balance too low. 0.00.'
+      expect { bank.debit(1) }.to raise_error(error_message)
     end
 
-    it "errors out when negative number" do
+    it 'errors out when negative number' do
       allow(transaction).to receive(:balance).and_return(0)
-      expect { bank.debit(-1) }.to raise_error("Numbers must be positive.")
+      expect { bank.debit(-1) }.to raise_error('Numbers must be positive.')
     end
   end
 

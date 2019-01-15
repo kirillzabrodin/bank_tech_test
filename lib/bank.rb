@@ -24,7 +24,7 @@ class Bank
   def debit(amount)
     raise "#{amount} is not a number" unless amount.is_a? Numeric
     raise 'Numbers must be positive.' if amount < 0
-    raise "Not enough credit, your balance is #{balance}." if amount > @transaction.balance
+    raise "Balance too low. #{balance}." if amount > @transaction.balance
 
     @transaction.debit(amount)
     add_to_statement(debit_format(amount))

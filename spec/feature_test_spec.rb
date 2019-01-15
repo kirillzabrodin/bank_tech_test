@@ -38,7 +38,7 @@ describe Bank do
     end
 
     it "doesn't allow withdrawals below 0" do
-      expect { make_debit(1) }.to raise_error("Not enough credit, your balance is 0.00.")
+      expect { make_debit(1) }.to raise_error("Balance too low. 0.00.")
     end
 
     it "doesn't allow negative values" do
