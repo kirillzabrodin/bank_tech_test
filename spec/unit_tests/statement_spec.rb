@@ -8,6 +8,15 @@ describe Statement do
     it 'prints statment to terminal' do
       expect { subject.print }.to output(header).to_stdout
     end
+
+    it 'prints statment with transaction to terminal' do
+      statement.add_credit_line(1, 2)
+      statement.add_debit_line(1, 2)
+      credit_line = "01/09/2008 || 1.00 || || 2\n"
+      debit_line = "01/09/2008 || || 1.00 || 2\n"
+      output = header + credit_line + debit_line
+      expect { subject.print }.to output(output).to_stdout
+    end
   end
 
   describe '#add_credit_line' do
