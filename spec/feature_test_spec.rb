@@ -24,16 +24,26 @@ describe Bank do
 
     it 'returns the status and latest transation in correct order' do
       statement = "#{header}"
-      statement << "#{make_debit(rand_to_1000)}#{make_credit(rand_to_1000)}"
+      statement << "#{make_credit(1000)}#{make_debit(1000)}"
       expect { bank.statement }.to output(statement).to_stdout
     end
 
     it 'checks for 100 transactions' do
       statement = "#{header}"
       (1..50).each do
-        statement << "#{make_debit(rand_to_1000)}#{make_credit(rand_to_1000)}"
+        amount = rand_to_1000
+        statement << "#{make_credit(amount)}#{make_debit(amount)}"
       end
       expect { bank.statement }.to output(statement).to_stdout
+    end
+
+    it "doesn't allow withdrawals below 0" do
+      expect { make_debit(1) }.to raise_error("Not enough credit, your balance is 0.00.")
+    end
+
+    it "doesn't allow negative values" do
+      expect { make_debit(-1) }.to raise_error("Numbers must be positive.")
+      expect { make_credit(-1) }.to raise_error("Numbers must be positive.")
     end
   end
 
