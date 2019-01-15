@@ -2,15 +2,13 @@ require './lib/transaction'
 
 class Bank
   attr_reader :transaction
-  def initialize(transaction = Transaction.new)
+  def initialize(transaction = Transaction.new, statement = Statement.new)
     @transaction = transaction
-    @header = 'date || credit || debit || balance'
-    @statement = []
+    @statement = statement
   end
 
-  def statement
-    puts @header.to_s
-    @statement.each { |line| puts line }
+  def print_statement
+    @statement.print
   end
 
   def credit(amount)
@@ -18,7 +16,7 @@ class Bank
     raise 'Numbers must be positive.' if amount < 0
 
     @transaction.credit(amount)
-    add_to_statement(credit_format(amount))
+    @statement.add_credit_line(amount, balance)
   end
 
   def debit(amount)
@@ -27,26 +25,10 @@ class Bank
     raise "Balance too low. #{balance}." if amount > @transaction.balance
 
     @transaction.debit(amount)
-    add_to_statement(debit_format(amount))
+    @statement.add_debit_line(amount, balance)
   end
 
   private
-
-  def add_to_statement(line)
-    @statement.push("#{time} || #{line} || #{balance}\n")
-  end
-
-  def debit_format(amount)
-    "|| #{format('%.2f', amount)}"
-  end
-
-  def credit_format(amount)
-    "#{format('%.2f', amount)} ||"
-  end
-
-  def time
-    Time.now.strftime('%d/%m/%Y')
-  end
 
   def balance
     format('%.2f', @transaction.balance)

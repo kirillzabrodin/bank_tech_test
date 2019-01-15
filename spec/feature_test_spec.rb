@@ -1,6 +1,7 @@
 require 'bank'
 require 'timecop'
 require 'transaction'
+require 'statement'
 
 describe Bank do
 
@@ -13,19 +14,19 @@ describe Bank do
 
   describe '#statement' do
     it 'returns empty status if no transactions' do
-      expect { bank.statement }.to output(header).to_stdout
+      expect { bank.print_statement }.to output(header).to_stdout
     end
 
     it 'returns the status and latest transation' do
       statement = "#{header}"
       statement << "#{make_credit(rand_to_1000)}"
-      expect { bank.statement }.to output(statement).to_stdout
+      expect { bank.print_statement }.to output(statement).to_stdout
     end
 
     it 'returns the status and latest transation in correct order' do
       statement = "#{header}"
       statement << "#{make_credit(1000)}#{make_debit(1000)}"
-      expect { bank.statement }.to output(statement).to_stdout
+      expect { bank.print_statement }.to output(statement).to_stdout
     end
 
     it 'checks for 100 transactions' do
@@ -34,9 +35,11 @@ describe Bank do
         amount = rand_to_1000
         statement << "#{make_credit(amount)}#{make_debit(amount)}"
       end
-      expect { bank.statement }.to output(statement).to_stdout
+      expect { bank.print_statement }.to output(statement).to_stdout
     end
+  end
 
+  describe '#credit/#debit' do
     it "doesn't allow withdrawals below 0" do
       expect { make_debit(1) }.to raise_error("Balance too low. 0.00.")
     end

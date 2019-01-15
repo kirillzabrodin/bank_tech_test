@@ -3,16 +3,23 @@ require 'timecop'
 
 describe Bank do
   let(:transaction) { double :transaction, credit: true, debit: true }
-  subject(:bank) { Bank.new(transaction) }
-  let(:header) { "date || credit || debit || balance\n" }
+  let(:statement) { double :statement }
+  subject(:bank) { Bank.new(transaction, statement) }
 
   before do
     Timecop.freeze(Time.local(2008, 9, 1, 10, 5, 0))
   end
 
+  before(:each) do
+    allow(transaction).to receive(:balance).and_return(0)
+    allow(statement).to receive(:add_credit_line)
+    allow(statement).to receive(:add_debit_line)
+  end
+
   describe '#statement' do
-    it 'returns empty status if no transactions' do
-      expect { subject.statement }.to output(header).to_stdout
+    it 'calls print on statement' do
+      expect(statement).to receive(:print)
+      bank.print_statement
     end
   end
 
@@ -20,7 +27,7 @@ describe Bank do
     it 'calls credit with the amount described' do
       amount = rand_to_1000
       expect(transaction).to receive(:credit).with(amount)
-      expect(bank).to receive(:add_to_statement).with(credit_format(amount))
+      expect(statement).to receive(:add_credit_line).with(amount, '0.00')
       bank.credit(amount)
     end
 
@@ -39,7 +46,7 @@ describe Bank do
       amount = rand_to_1000
       expect(transaction).to receive(:balance).and_return(amount)
       expect(transaction).to receive(:debit).with(amount)
-      expect(bank).to receive(:add_to_statement).with(debit_format(amount))
+      expect(statement).to receive(:add_debit_line).with(amount, '0.00')
       bank.debit(amount)
     end
 
@@ -48,27 +55,13 @@ describe Bank do
     end
 
     it 'errors out when balance too low' do
-      allow(transaction).to receive(:balance).and_return(0)
       error_message = 'Balance too low. 0.00.'
       expect { bank.debit(1) }.to raise_error(error_message)
     end
 
     it 'errors out when negative number' do
-      allow(transaction).to receive(:balance).and_return(0)
       expect { bank.debit(-1) }.to raise_error('Numbers must be positive.')
     end
-  end
-
-  def time
-    Time.now.strftime('%d/%m/%Y')
-  end
-
-  def debit_format(amount)
-    "|| #{format('%.2f', amount)}"
-  end
-
-  def credit_format(amount)
-    "#{format('%.2f', amount)} ||"
   end
 
   def rand_to_1000
