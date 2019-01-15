@@ -1,4 +1,5 @@
 require './lib/transaction'
+require './lib/statement'
 
 class Bank
   attr_reader :transaction
