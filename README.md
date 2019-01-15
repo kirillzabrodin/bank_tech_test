@@ -42,7 +42,7 @@ You can use ```.statement``` on the object to get the statement and ```.credit(a
 ~~I ended up adding the time in minutes for when the transaction occured.~~
 
 ### Example
-[[https://github.com/kirillzabrodin/bank_tech_test/blob/master/Bank_exmaple.png]]
+![alt text](https://github.com/kirillzabrodin/bank_tech_test/blob/master/Bank_exmaple.png)
 
 ### Contributing
 
