@@ -1,6 +1,7 @@
 require './lib/transaction'
 
 class Bank
+  attr_reader :transaction
   def initialize(transaction = Transaction.new)
     @transaction = transaction
     @header = 'date || credit || debit || balance'
