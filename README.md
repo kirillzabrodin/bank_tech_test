@@ -37,9 +37,9 @@ This will set up the REPL environment for playing with the code.
 Create a new bank class object for yourself with
 ``` your_name = Bank.new ```
 
-You can use ```.statement``` on the object to get the statement and ```.credit(amount)```/```.debit(amount)``` to add or withdraw money.
+You can use ```.print_statement``` on the object to get the statement and ```.credit(amount)```/```.debit(amount)``` to add or withdraw money.
 
-~~I ended up adding the time in minutes for when the transaction occured.~~
+~~I ended up adding the time in minutes for when the transaction occurred.~~
 
 ### Example
 ![alt text](https://github.com/kirillzabrodin/bank_tech_test/blob/master/Bank_exmaple.png)
